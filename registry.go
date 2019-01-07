@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"strings"
 
-	our "git.loafle.net/overflow/util-go/reflect"
+	lur "github.com/LOAFLE/util-go/reflect"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -52,7 +52,7 @@ func Register(t reflect.Type) error {
 	return SystemRegistry.Register(t)
 }
 func (r *AnnotationRegistry) Register(t reflect.Type) error {
-	rt, _, _ := our.GetTypeInfo(t)
+	rt, _, _ := lur.GetTypeInfo(t)
 
 	fields := findAnnotatedFields(t, AnnotationType, false)
 	switch len(fields) {
@@ -84,7 +84,7 @@ func (r *AnnotationRegistry) Register(t reflect.Type) error {
 func findAnnotatedFields(t reflect.Type, ft reflect.Type, deep bool) map[string]*reflect.StructField {
 	fields := make(map[string]*reflect.StructField, 0)
 
-	rt, _, _ := our.GetTypeInfo(t)
+	rt, _, _ := lur.GetTypeInfo(t)
 	if reflect.Struct != rt.Kind() {
 		return fields
 	}
@@ -192,7 +192,7 @@ func (r *AnnotationRegistry) getAnnotation(f *reflect.StructField) (map[reflect.
 }
 
 func (r *AnnotationRegistry) getTypeDefinition(t reflect.Type) (*TypeDefinition, error) {
-	rt, _, _ := our.GetTypeInfo(t)
+	rt, _, _ := lur.GetTypeInfo(t)
 	if reflect.Struct != rt.Kind() {
 		return nil, fmt.Errorf("type[%s] is not struct", rt.Name())
 	}
